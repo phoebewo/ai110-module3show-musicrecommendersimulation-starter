@@ -1,111 +1,61 @@
 # 🎧 Model Card: Music Recommender Simulation
 
-## 1. Model Name  
+## 1. Model Name
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
-
----
-
-## 2. Intended Use  
-
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+**VibeFinder 1.0**
 
 ---
 
-## 3. How the Model Works  
+## 2. Intended Use
 
-Explain your scoring approach in simple language.  
-
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+It suggests songs based on your mood, genre, energy level, and whether you like acoustic music. This is a classroom project — not a real app. It's not meant to be used for actual music recommendations.
 
 ---
 
-## 4. Data  
+## 3. How the Model Works
 
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+Each song gets a score based on how well it matches what the user wants. Genre and mood get bonus points if they match exactly. Energy is scored by how close the song is to the user's target — closer means more points. Acoustic is a yes or no match. The top 5 highest-scoring songs are returned.
 
 ---
 
-## 5. Strengths  
+## 4. Data
 
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+The catalog has 10 songs. Each song has a genre, mood, energy level, and acousticness. Genres include pop, lofi, rock, jazz, and a few others. There are no sad, angry, or metal songs in the dataset at all.
 
 ---
 
-## 6. Limitations and Bias 
+## 5. Strengths
 
-Where the system struggles or behaves unfairly. 
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+It works well when the user's taste matches what's in the catalog. A chill lofi fan gets quiet acoustic songs. A rock fan gets loud intense ones. The scores are easy to understand — you can always see exactly why a song ranked where it did.
 
 ---
 
-## 7. Evaluation  
+## 6. Limitations and Bias
 
-How you checked whether the recommender behaved as expected. 
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-
-No need for numeric metrics unless you created some.
+The catalog is too small and uneven. Most songs are either very low or very high energy, so middle-energy users never get a great match. Moods like "sad" and genres like "metal" don't exist in the data, so those users always get weaker results.
 
 ---
 
-## 8. Future Work  
+## 7. Evaluation
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+I tested nine profiles — three normal ones and six edge cases designed to stress-test the system. The normal profiles worked as expected. The most surprising result was that a "sad pop" user got the exact same recommendations as a "happy pop" user, because no sad songs exist in the catalog. An out-of-range energy value (2.0) also caused the formula to silently give negative scores.
 
 ---
 
-## 9. Personal Reflection  
+## 8. Future Work
 
-A few sentences about your experience.  
+- Add more songs, especially ones with moods like "sad" or genres like "metal" so more users get useful results
+- Score acousticness on a scale instead of yes or no, so a slightly acoustic song still gets some credit
+- Let users say what they don't like, so the system can actively avoid recommending those songs
 
-Prompts:  
+---
 
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+## 9. Personal Reflection
+
+A few sentences about your experience.
+
+Prompts:
+
+- What you learned about recommender systems
+- Something unexpected or interesting you discovered
+- How this changed the way you think about music recommendation apps
