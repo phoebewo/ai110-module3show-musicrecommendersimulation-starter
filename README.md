@@ -17,17 +17,23 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Real-world recommendation software used in platforms like Spotify or YouTube learn your preferences by observing past actions - skips, replays, playlist adds - and suggests  content accordingly. They also recommend content that people with similar taste to me tend to like.
 
-Some prompts to answer:
+This version takes a simpler, more transparent approach — prioritizing explainability over complexity. Each song is described by five features (genre, mood, energy on a 0–1 scale, tempo in BPM, and acousticness), and a user profile stores four preferences — a favorite genre, a favorite mood, a target energy level, and whether they lean acoustic. The recommender scores every song in the catalog by comparing those features to the user's profile: categorical matches like genre and mood earn weighted bonus points, while numerical features like energy are scored by proximity — a song that closely matches your target energy scores higher than one that is simply "high energy." All songs are then ranked by total score and the top results are returned, making the weights visible and the math something you can reason about, adjust, and critique.
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+**Algorithm Recipe:**
 
-You can include a simple diagram or bullet list if helpful.
+- genre match → 3.0 pts
+- energy proximity → 2.5 pts (score = 1 - |song.energy - user.target_energy|)
+- mood match → 2.0 pts
+- acoustic match → 1.5 pts
+- max score: 9.0 — rank all songs descending, return top k
+
+**Potential biases:**
+
+- Genre carries the most weight, so a great song that matches mood and energy but not genre will often lose to a weaker song in the right genre
+- Users who like acoustic music may be over-penalized since acousticness is continuous but `likes_acoustic` is a simple yes/no
+- The catalog is small and hand-picked, so the system reflects whoever chose those songs, not a diverse listener base
 
 ---
 
